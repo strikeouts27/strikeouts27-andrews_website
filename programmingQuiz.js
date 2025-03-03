@@ -40,30 +40,33 @@ function quiz(quiz_questions, quiz_answers) {
   document
     .getElementById("submit-answer")
     .addEventListener("click", function () {
-      let userAnswer = document.getElementById("answer").value;
+      while (i < quiz_questions.length) {
+        let userAnswer = document.getElementById("answer").value;
 
-      if (userAnswer === quiz_answers[i]) {
-        userScore += availablePoints;
-        alert(
-          `Nice work, you got it right! You scored ${availablePoints} points.`
-        );
-        nextQuestion();
-      } else {
-        guesses--;
-        availablePoints--;
-        alert(
-          `Incorrect. You have ${guesses} guesses left. Please try to answer the question again!`
-        );
-
-        if (guesses === 0) {
+        if (userAnswer === quiz_answers[i]) {
+          userScore += availablePoints;
           alert(
-            "No points will be awarded this time around. Let's move on to the next question."
+            `Nice work, you got it right! You scored ${availablePoints} points.`
           );
           nextQuestion();
-        }
-      }
+        } else {
+          guesses--;
+          availablePoints--;
+          alert(
+            `Incorrect. You have ${guesses} guesses left. Please try to answer the question again!`
+          );
 
-      updateScore();
+          if (guesses === 0) {
+            alert(
+              "No points will be awarded this time around. Let's move on to the next question."
+            );
+            nextQuestion();
+          }
+        }
+
+        updateScore();
+        break; // Exit the while loop after processing the current question
+      }
     });
 
   updateScore();
