@@ -28,4 +28,7 @@ function main() {
     alert("Please enter a valid number greater than 0.");
     return;
   }
-  quoteSelector(quoteNumber); // Display the selected quote
+  quoteSelector(quoteNumber);
+  } // Display the selected quote
+
+  
