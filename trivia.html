@@ -5,11 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz</title>
     <link rel="stylesheet" href="trivia.css">
-    <style>
-        #submit-answer {
-            display: none;
-        }
-    </style>
 </head>
 <body>
     <h1>Welcome To Our Trivia Game!</h1>
@@ -20,10 +15,14 @@
     <div id="quiz-container" style="display:none;">
         <p id="question"></p>
         <input type="text" id="answer" placeholder="Your answer">
+        <div id="answer-bank-container">
+            <label for="answer-bank">Answer Bank:</label>
+            <textarea id="answer-bank" rows="4" cols="50" readonly></textarea>
+        </div>
         <button id="submit-answer">Submit Answer</button>
     </div>
     <p id="score"></p>
-    <p id="current-date-time"></p> <!-- Element to display the current date and time -->
+    <p id="final-score"></p>
     <script src="trivia.js"></script>
 </body>
 </html>

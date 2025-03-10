@@ -4,7 +4,8 @@ let quiz_questions = [
   "What programming language is used to create color styles for a webpage?",
 ];
 
-let quiz_answers = ["Javascript", "HTML", "CSS"];
+let quiz_answers = ["javascript", "html", "css"];
+let used_answers = [];
 
 function quiz(quiz_questions, quiz_answers) {
   let userScore = 0;
@@ -22,33 +23,49 @@ function quiz(quiz_questions, quiz_answers) {
     ).innerText = `Your total score is: ${userScore}`;
   }
 
+  function displayFinalScore() {
+    const totalPointsPossible = quiz_questions.length * 3;
+    const percentageScore = ((userScore / totalPointsPossible) * 100).toFixed(
+      2
+    );
+    document.getElementById(
+      "final-score"
+    ).innerText = `Your final score is: ${userScore} points (${percentageScore}%)`;
+  }
+
   function nextQuestion() {
     currentQuestionIndex++;
     guesses = 3; // Reset guesses for the next question
     availablePoints = 3; // Reset available points for the next question
     if (currentQuestionIndex < quiz_questions.length) {
       displayQuestion(currentQuestionIndex);
+      updateAnswerBank();
     } else {
       alert("Quiz completed!");
       updateScore();
       document.getElementById("quiz-container").style.display = "none";
-      document.getElementById("start-quiz").style.display = "block";
-      document.getElementById("submit-answer").style.display = "none";
+      displayFinalScore();
     }
   }
 
+  function updateAnswerBank() {
+    let availableAnswers = quiz_answers.filter(
+      (answer) => !used_answers.includes(answer)
+    );
+    document.getElementById("answer-bank").value = availableAnswers.join(", ");
+  }
+
   displayQuestion(currentQuestionIndex);
+  updateAnswerBank();
 
   document
     .getElementById("submit-answer")
     .addEventListener("click", function () {
-      let userAnswer = document.getElementById("answer").value;
+      let userAnswer = document.getElementById("answer").value.toLowerCase();
 
-      if (
-        userAnswer.toUpperCase() ===
-        quiz_answers[currentQuestionIndex].toUpperCase()
-      ) {
+      if (userAnswer === quiz_answers[currentQuestionIndex]) {
         userScore += availablePoints;
+        used_answers.push(userAnswer);
         alert(
           `Nice work! The scorekeeper grants you the maximum number of possible points! You have scored ${availablePoints} points.`
         );
@@ -180,9 +197,11 @@ function displayQuoteOfTheDay() {
 }
 
 // Call the greetPlayer, getEmailAndValidate, and displayQuoteOfTheDay functions immediately when the script loads
-greetPlayer();
-getEmailAndValidate();
-displayQuoteOfTheDay();
+document.addEventListener("DOMContentLoaded", function () {
+  greetPlayer();
+  getEmailAndValidate();
+  displayQuoteOfTheDay();
+});
 
 // Add event listener to the button
 document.getElementById("start-quiz").addEventListener("click", function () {
