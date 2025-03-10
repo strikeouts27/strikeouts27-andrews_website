@@ -42,13 +42,13 @@ function quiz(quiz_questions, quiz_answers) {
   }
 
   function showScore() {
-    const totalPointsPossible = quiz_questions.length * 3;
+    const totalPointsPossible = quiz_questions.length * availablePoints;
     const percentageScore = ((userScore / totalPointsPossible) * 100).toFixed(
       2
     );
     document.getElementById(
       "final-score"
-    ).innerText = `Your final score is: ${userScore} points (${percentageScore}%)`;
+    ).innerText = `Your total number of correct answers was ${userScore} and your percentage correct was ${percentageScore}%`;
     document.getElementById("final-score-container").style.display = "block";
   }
 
@@ -61,7 +61,6 @@ function quiz(quiz_questions, quiz_answers) {
       updateAnswerBank();
     } else {
       alert("Quiz completed!");
-      document.getElementById("quiz-container").style.display = "none";
       showScore();
     }
   }
