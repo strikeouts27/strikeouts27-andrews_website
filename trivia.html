@@ -1,28 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz</title>
-    <link rel="stylesheet" href="trivia.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trivia Game</title>
 </head>
 <body>
-    <h1>Welcome To Our Trivia Game!</h1>
-    <p id="greeting"></p> <!-- Element to display the greeting -->
-    <p id="email-info"></p> <!-- Element to display the email information -->
-    <p id="quote-of-the-day"></p> <!-- Element to display the quote of the day -->
-    <button id="start-quiz">Start Quiz</button>
-    <div id="quiz-container" style="display:none;">
-        <p id="question"></p>
-        <input type="text" id="answer" placeholder="Your answer">
-        <div id="answer-bank-container">
-            <label for="answer-bank">Answer Bank:</label>
-            <textarea id="answer-bank" rows="4" cols="50" readonly></textarea>
-        </div>
-        <button id="submit-answer">Submit Answer</button>
-    </div>
-    <p id="score"></p>
-    <p id="final-score"></p>
-    <script src="trivia.js"></script>
+  <div id="greeting"></div>
+  <div id="email-info"></div>
+  <div id="quote-of-the-day"></div>
+  <div id="current-date-time"></div>
+  <div id="quiz-container" style="display: none;">
+    <div id="question"></div>
+    <input type="text" id="answer">
+    <button id="submit-answer" style="display: none;">Submit Answer</button>
+    <div id="answer-bank"></div>
+    <div id="score"></div>
+    <div id="final-score"></div>
+  </div>
+  <button id="start-quiz">Start Quiz</button>
+  <script src="trivia.js"></script>
 </body>
 </html>

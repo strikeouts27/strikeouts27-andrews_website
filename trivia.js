@@ -196,12 +196,15 @@ function displayQuoteOfTheDay() {
   ).innerText = `Todays quote of the day is: ${quoteOfTheDay}`;
 }
 
-// Call the greetPlayer, getEmailAndValidate, and displayQuoteOfTheDay functions immediately when the script loads
-document.addEventListener("DOMContentLoaded", function () {
+// Main function to call other functions
+function main() {
   greetPlayer();
   getEmailAndValidate();
   displayQuoteOfTheDay();
-});
+}
+
+// Ensure the DOM is fully loaded before running the script
+document.addEventListener("DOMContentLoaded", main);
 
 // Add event listener to the button
 document.getElementById("start-quiz").addEventListener("click", function () {
