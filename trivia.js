@@ -27,9 +27,9 @@ let used_answers = [];
 
 function quiz(quiz_questions, quiz_answers) {
   let userScore = 0;
-  let availablePoints = 3;
+  let availablePoints = 1;
   let currentQuestionIndex = 0;
-  let guesses = 3;
+  let guesses = 1;
 
   function displayQuestion(i) {
     document.getElementById("question").innerText = quiz_questions[i];
@@ -41,7 +41,7 @@ function quiz(quiz_questions, quiz_answers) {
     ).innerText = `Your total score is: ${userScore}`;
   }
 
-  function displayFinalScore() {
+  function showScore() {
     const totalPointsPossible = quiz_questions.length * 3;
     const percentageScore = ((userScore / totalPointsPossible) * 100).toFixed(
       2
@@ -49,20 +49,27 @@ function quiz(quiz_questions, quiz_answers) {
     document.getElementById(
       "final-score"
     ).innerText = `Your final score is: ${userScore} points (${percentageScore}%)`;
+    document.getElementById("final-score-container").style.display = "block";
   }
 
   function nextQuestion() {
     currentQuestionIndex++;
-    guesses = 3; // Reset guesses for the next question
-    availablePoints = 3; // Reset available points for the next question
+    guesses = 1;
+    availablePoints = 1;
     if (currentQuestionIndex < quiz_questions.length) {
       displayQuestion(currentQuestionIndex);
       updateAnswerBank();
     } else {
       alert("Quiz completed!");
-      updateScore();
       document.getElementById("quiz-container").style.display = "none";
-      displayFinalScore();
+      showScore();
+    }
+  }
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
   }
 
@@ -70,6 +77,7 @@ function quiz(quiz_questions, quiz_answers) {
     let availableAnswers = quiz_answers.filter(
       (answer) => !used_answers.includes(answer)
     );
+    shuffleArray(availableAnswers);
     document.getElementById(
       "answer-bank"
     ).innerText = `Possible answers: ${availableAnswers.join(", ")}`;
@@ -86,9 +94,7 @@ function quiz(quiz_questions, quiz_answers) {
       if (userAnswer === quiz_answers[currentQuestionIndex]) {
         userScore += availablePoints;
         used_answers.push(userAnswer);
-        alert(
-          `Nice work! The scorekeeper grants you the maximum number of possible points! You have scored ${availablePoints} points.`
-        );
+        alert(`Nice work! You have scored ${availablePoints} points.`);
         nextQuestion();
       } else {
         guesses--;
@@ -107,53 +113,59 @@ function quiz(quiz_questions, quiz_answers) {
     });
 }
 
-// Create a date object with the current date
-let date = new Date();
-console.log("Current Date:", date);
-
-// Lets also get the current time
-let time = date.getTime();
-console.log("Current Timestamp:", time);
-
-// Display the date and time on the webpage
 function displayDateTime() {
   let currentDate = new Date();
-  let formattedDate = currentDate.toLocaleDateString();
-  let formattedTime = currentDate.toLocaleTimeString();
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let day = days[currentDate.getDay()];
+  let date = currentDate.getDate();
+  let months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  let month = months[currentDate.getMonth()];
+  let year = currentDate.getFullYear();
+  let hours = currentDate.getHours();
+  let minutes = currentDate.getMinutes();
+  let ampm = hours >= 12 ? "pm" : "am";
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  let formattedTime = hours + ":" + minutes + " " + ampm;
   document.getElementById(
     "current-date-time"
-  ).innerText = `Current Date and Time: ${formattedDate} ${formattedTime}`;
+  ).innerText = `Today is ${day}, ${month} ${date}, ${year}. It is ${formattedTime}.`;
 }
 
-// Call the function to display the date and time
-displayDateTime();
-
-// Function to display greeting based on the time of day
 function timeGreet() {
   let currentHour = new Date().getHours();
-  let timeGreeting;
-
-  switch (true) {
-    case currentHour < 12:
-      timeGreeting = "Good Morning";
-      break;
-    case currentHour < 18:
-      timeGreeting = "Good Afternoon";
-      break;
-    default:
-      timeGreeting = "Good Evening";
-  }
-
-  return timeGreeting;
+  if (currentHour < 12) return "Good Morning";
+  if (currentHour < 18) return "Good Afternoon";
+  return "Good Evening";
 }
 
-// Function to capitalize the first letter of the name
 function capitalizeFirstLetter(name) {
   if (!name) return "";
   return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 }
 
-// Function to greet the player and format their name
 function greetPlayer() {
   let playerNameInput = prompt("Hello User! Please enter your name!");
   if (playerNameInput !== null) {
@@ -167,13 +179,11 @@ function greetPlayer() {
   }
 }
 
-// Function to validate email using a regular expression
 function validateEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
 
-// Function to prompt the user to enter an email address and validate it
 function getEmailAndValidate() {
   let email;
   do {
@@ -188,17 +198,13 @@ function getEmailAndValidate() {
     }
   } while (!validateEmail(email));
 
-  // Split the email address into username and domain
   const [username, domain] = email.split("@");
   const upperCaseUsername = username.toUpperCase();
-
-  // Display the username and domain separately
   document.getElementById(
     "email-info"
   ).innerText = `Username: ${upperCaseUsername}, Domain: ${domain}`;
 }
 
-// Function to display a random quote of the day
 function displayQuoteOfTheDay() {
   const quotes = [
     "The best way to predict the future is to invent it.",
@@ -210,26 +216,22 @@ function displayQuoteOfTheDay() {
 
   const randomIndex = Math.floor(Math.random() * quotes.length);
   const quoteOfTheDay = quotes[randomIndex];
-
   document.getElementById(
     "quote-of-the-day"
-  ).innerText = `Todays quote of the day is: ${quoteOfTheDay}`;
+  ).innerText = `Today's quote of the day is: ${quoteOfTheDay}`;
 }
 
-// Main function to call other functions
 function main() {
   greetPlayer();
   getEmailAndValidate();
   displayQuoteOfTheDay();
+  displayDateTime();
+  document.getElementById("start-quiz").addEventListener("click", function () {
+    document.getElementById("quiz-container").style.display = "block";
+    document.getElementById("start-quiz").style.display = "none";
+    document.getElementById("submit-answer").style.display = "block";
+    quiz(quiz_questions, quiz_answers);
+  });
 }
 
-// Ensure the DOM is fully loaded before running the script
 document.addEventListener("DOMContentLoaded", main);
-
-// Add event listener to the button
-document.getElementById("start-quiz").addEventListener("click", function () {
-  document.getElementById("quiz-container").style.display = "block";
-  document.getElementById("start-quiz").style.display = "none";
-  document.getElementById("submit-answer").style.display = "block";
-  quiz(quiz_questions, quiz_answers);
-});
