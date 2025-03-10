@@ -1,10 +1,28 @@
 let quiz_questions = [
-  "Which programming language is known most for website interactivity?",
-  "Which programming language is used to create the basic skeleton or outline of a webpage?",
-  "What programming language is used to create color styles for a webpage?",
+  "Which programming language is best known for web development?",
+  "Which programming language is best known for data analysis?",
+  "Which programming language is best known for mobile app development?",
+  "Which programming language is best known for system programming?",
+  "Which programming language is best known for artificial intelligence?",
+  "Which programming language is best known for game development?",
+  "Which programming language is best known for scientific computing?",
+  "Which programming language is best known for enterprise applications?",
+  "Which programming language is best known for scripting?",
+  "Which programming language is best known for functional programming?",
 ];
 
-let quiz_answers = ["javascript", "html", "css"];
+let quiz_answers = [
+  "javascript",
+  "python",
+  "swift",
+  "c",
+  "lisp",
+  "c++",
+  "fortran",
+  "java",
+  "perl",
+  "haskell",
+];
 let used_answers = [];
 
 function quiz(quiz_questions, quiz_answers) {
@@ -52,7 +70,9 @@ function quiz(quiz_questions, quiz_answers) {
     let availableAnswers = quiz_answers.filter(
       (answer) => !used_answers.includes(answer)
     );
-    document.getElementById("answer-bank").value = availableAnswers.join(", ");
+    document.getElementById(
+      "answer-bank"
+    ).innerText = `Possible answers: ${availableAnswers.join(", ")}`;
   }
 
   displayQuestion(currentQuestionIndex);
